@@ -9,6 +9,7 @@ use Give_Payment;
 use GiveGoogleAnalytics\Donations\Repositories\DonationRepository;
 use GiveGoogleAnalytics\GoogleAnalytics\GA4\Client;
 use GiveGoogleAnalytics\GoogleAnalytics\ValueObjects\TrackingMode;
+use GiveGoogleAnalytics\Log\Log;
 use GiveGoogleAnalytics\Settings\Repositories\SettingRepository;
 
 /**
@@ -111,6 +112,10 @@ class RecordDonationInGoogleAnalyticsWithGA4
                 );
             }
         } catch (\Exception $exception) {
+            Log::error('Google Analytics ecommerce beacon failed to send.', [
+                'donationId' => $donationId,
+                'exception' => $exception,
+            ]);
         }
     }
 
